@@ -9,6 +9,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 import base64
+import pathlib
 import shutil
 import subprocess
 import tempfile
@@ -101,10 +102,10 @@ class TestMusicDownload(unittest.TestCase):
                 'album': 'Album', 'track_number': 3, 'extractor': 'youtube', 'extractor_key': 'Youtube',
                 'webpage_url': 'https://music.youtube.com/watch?v=abcdefghijk',
                 'formats': [
-                    {'format_id': '251', 'url': f'file://{d}/song.webm', 'ext': 'webm', 'acodec': 'opus', 'vcodec': 'none'},
-                    {'format_id': '18', 'url': f'file://{d}/song.webm', 'ext': 'mp4', 'acodec': 'mp4a.40.2', 'vcodec': 'avc1'},
+                    {'format_id': '251', 'url': pathlib.Path(d, 'song.webm').as_uri(), 'ext': 'webm', 'acodec': 'opus', 'vcodec': 'none'},
+                    {'format_id': '18', 'url': pathlib.Path(d, 'song.webm').as_uri(), 'ext': 'mp4', 'acodec': 'mp4a.40.2', 'vcodec': 'avc1'},
                 ],
-                'thumbnails': [{'url': f'file://{d}/thumb.webp', 'id': '0'}],
+                'thumbnails': [{'url': pathlib.Path(d, 'thumb.webp').as_uri(), 'id': '0'}],
             }
             with YoutubeDL(ydl_opts) as ydl:
                 ydl.process_ie_result(info, download=True)

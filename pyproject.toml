@@ -3,7 +3,7 @@ requires = ["hatchling>=1.27.0"]
 build-backend = "hatchling.build"
 
 [project]
-name = "yt-dlp"
+name = "ytm"
 authors = [
     {name = "pukkandan", email = "pukkandan.ytdlp@gmail.com"},
 ]
@@ -13,7 +13,7 @@ maintainers = [
     {name = "bashonly", email = "bashonly@protonmail.com"},
     {name = "coletdjnz", email = "coletdjnz@protonmail.com"},
 ]
-description = "A feature-rich command-line audio/video downloader"
+description = "YouTube Music focused fork of yt-dlp: search, stream and download tagged audio"
 readme = "README.md"
 requires-python = ">=3.10"
 keywords = [
@@ -24,8 +24,8 @@ keywords = [
     "sponsorblock",
     "yt-dlp",
 ]
-license = "Unlicense"
-license-files = ["LICENSE"]
+license = "GPL-3.0-only AND Unlicense"
+license-files = ["LICENSE", "UNLICENSE-yt-dlp.txt"]
 classifiers = [
     "Topic :: Multimedia :: Video",
     "Development Status :: 5 - Production/Stable",
@@ -136,12 +136,13 @@ uv = [
 ]
 
 [project.urls]
-Documentation = "https://github.com/yt-dlp/yt-dlp#readme"
-Repository = "https://github.com/yt-dlp/yt-dlp"
-Tracker = "https://github.com/yt-dlp/yt-dlp/issues"
-Funding = "https://github.com/yt-dlp/yt-dlp/blob/master/Maintainers.md#maintainers"
+Documentation = "https://github.com/devmidnightst/ytm#readme"
+Repository = "https://github.com/devmidnightst/ytm"
+Tracker = "https://github.com/devmidnightst/ytm/issues"
+Upstream = "https://github.com/yt-dlp/yt-dlp"
 
 [project.scripts]
+ytm = "ytm:main"
 yt-dlp = "yt_dlp:main"
 
 [project.entry-points.pyinstaller40]
@@ -150,11 +151,14 @@ hook-dirs = "yt_dlp.__pyinstaller:get_hook_dirs"
 [tool.hatch.build.targets.sdist]
 include = [
     "/yt_dlp",
+    "/ytm",
+    "/hatch_build.py",
     "/devscripts",
     "/test",
     "/.gitignore",  # included by default, needed for auto-excludes
     "/Changelog.md",
     "/LICENSE",  # included as license
+    "/UNLICENSE-yt-dlp.txt",  # upstream yt-dlp license
     "/pyproject.toml",  # included by default
     "/README.md",  # included as readme
     "/supportedsites.md",
@@ -168,7 +172,7 @@ artifacts = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["yt_dlp"]
+packages = ["yt_dlp", "ytm"]
 artifacts = [
     "/yt_dlp/extractor/lazy_extractors.py",
 ]
@@ -182,6 +186,11 @@ exclude = [
 "completions/fish/yt-dlp.fish" = "share/fish/vendor_completions.d/yt-dlp.fish"
 "README.txt" = "share/doc/yt_dlp/README.txt"
 "yt-dlp.1" = "share/man/man1/yt-dlp.1"
+
+# Generates yt_dlp/extractor/lazy_extractors.py so that installs straight from
+# git (pip install git+...) get the same fast startup as release builds
+[tool.hatch.build.hooks.custom]
+path = "hatch_build.py"
 
 [tool.hatch.version]
 path = "yt_dlp/version.py"

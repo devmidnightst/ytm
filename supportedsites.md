@@ -1693,6 +1693,7 @@ The only reliable way to check if a site is supported is to try it.
  - **youtube:clip**: [*youtube*](## "netrc machine")
  - **youtube:favorites**: [*youtube*](## "netrc machine") YouTube liked videos; ":ytfav" keyword (requires cookies)
  - **youtube:history**: [*youtube*](## "netrc machine") Youtube watch history; ":ythis" keyword (requires cookies)
+ - **youtube:​music:search**: [*youtube*](## "netrc machine") YouTube Music search (songs); "ytmsearch:" prefix
  - **youtube:​music:search_url**: [*youtube*](## "netrc machine") YouTube music search URLs with selectable sections, e.g. #songs
  - **youtube:notif**: [*youtube*](## "netrc machine") YouTube notifications; ":ytnotif" keyword (requires cookies)
  - **youtube:playlist**: [*youtube*](## "netrc machine") YouTube playlists

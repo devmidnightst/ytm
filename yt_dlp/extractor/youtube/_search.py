@@ -99,6 +99,24 @@ class YoutubeSearchURLIE(YoutubeTabBaseInfoExtractor):
         return self.playlist_result(self._search_results(query, qs.get('sp', (None,))[0]), query, query)
 
 
+class YoutubeMusicSearchIE(YoutubeTabBaseInfoExtractor, SearchInfoExtractor):
+    IE_DESC = 'YouTube Music search (songs)'
+    IE_NAME = 'youtube:music:search'
+    _SEARCH_KEY = 'ytmsearch'
+    _SEARCH_PARAMS = 'EgWKAQIIAWoKEAoQAxAEEAkQBQ=='  # Songs only
+    _TESTS = [{
+        'url': 'ytmsearch5:royalty free music',
+        'playlist_count': 5,
+        'info_dict': {
+            'id': 'royalty free music',
+            'title': 'royalty free music',
+        },
+    }]
+
+    def _search_results(self, query):
+        return super()._search_results(query, default_client='web_music')
+
+
 class YoutubeMusicSearchURLIE(YoutubeTabBaseInfoExtractor):
     IE_DESC = 'YouTube music search URLs with selectable sections, e.g. #songs'
     IE_NAME = 'youtube:music:search_url'

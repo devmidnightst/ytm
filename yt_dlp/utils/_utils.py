@@ -951,11 +951,13 @@ def formatSeconds(secs, delim=':', msec=False):
     return '%s.%03d' % (ret, time.milliseconds) if msec else ret
 
 
-def bug_reports_message(before=';'):
-    from ..update import REPOSITORY
+# Bugs in this fork must not end up on the upstream yt-dlp tracker
+ISSUES_REPOSITORY = 'devmidnightst/ytm'
 
-    msg = (f'please report this issue on  https://github.com/{REPOSITORY}/issues?q= , '
-           'filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U')
+
+def bug_reports_message(before=';'):
+    msg = (f'please report this issue on  https://github.com/{ISSUES_REPOSITORY}/issues?q= , '
+           'and include the full output of the command run with  -v')
 
     before = before.rstrip()
     if not before or before.endswith(('.', '!', '?')):
@@ -984,7 +986,9 @@ class ExtractorError(YoutubeDLError):
         If expected is set, this is a normal error message and most likely not a bug in yt-dlp.
         """
         from ..networking.exceptions import network_exceptions
-        if sys.exc_info()[0] in network_exceptions:
+        # Subclasses (ProxyError, SSLError, IncompleteRead, ...) are network issues too,
+        # not extractor bugs, so don't ask the user to file a bug report for them
+        if isinstance(sys.exc_info()[1], network_exceptions) or isinstance(cause, network_exceptions):
             expected = True
 
         self.orig_msg = str(msg)

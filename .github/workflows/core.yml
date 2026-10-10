@@ -8,6 +8,8 @@ on:
       - devscripts/run_tests.py
       - test/**
       - yt_dlp/**.py
+      - ytm/**.py
+      - hatch_build.py
       - '!yt_dlp/extractor/**.py'
       - yt_dlp/extractor/youtube/**.py
       - yt_dlp/extractor/__init__.py
@@ -21,6 +23,8 @@ on:
       - devscripts/run_tests.py
       - test/**
       - yt_dlp/**.py
+      - ytm/**.py
+      - hatch_build.py
       - '!yt_dlp/extractor/**.py'
       - yt_dlp/extractor/youtube/**.py
       - yt_dlp/extractor/__init__.py

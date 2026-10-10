@@ -156,6 +156,12 @@ _PRESET_ALIASES = {
     'mp4': ['--merge-output-format', 'mp4', '--remux-video', 'mp4', '-S', 'vcodec:h264,lang,quality,res,fps,hdr:12,acodec:aac'],
     'mkv': ['--merge-output-format', 'mkv', '--remux-video', 'mkv'],
     'sleep': ['--sleep-subtitles', '5', '--sleep-requests', '0.75', '--sleep-interval', '10', '--max-sleep-interval', '20'],
+    # Keep the source codec (no lossy re-encode), tag the file and embed square cover art
+    'music': [
+        '-f', 'ba[acodec=opus]/ba[ext=m4a]/ba/b', '-x', '--audio-format', 'best',
+        '--embed-metadata', '--embed-thumbnail', '--convert-thumbnails', 'jpg',
+        '--ppa', 'ThumbnailsConvertor+FFmpeg_o:-c:v mjpeg -vf crop="\'if(gt(ih,iw),iw,ih)\':\'if(gt(iw,ih),ih,iw)\'"',
+    ],
 }
 
 

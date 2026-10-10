@@ -2381,6 +2381,7 @@ from .youtube import (
     YoutubeHistoryIE,
     YoutubeIE,
     YoutubeLivestreamEmbedIE,
+    YoutubeMusicSearchIE,
     YoutubeMusicSearchURLIE,
     YoutubeNotificationsIE,
     YoutubePlaylistIE,

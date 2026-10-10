@@ -961,10 +961,14 @@ def parse_options(argv=None):
     })
 
 
-def _real_main(argv=None):
+def _real_main(argv=None, url_hook=None):
     setproctitle('yt-dlp')
 
     parser, opts, all_urls, ydl_opts = parse_options(argv)
+    if url_hook:
+        # Lets front-ends (e.g. ytm) turn free text into search URLs while
+        # keeping every other yt-dlp option working as usual
+        all_urls = url_hook(all_urls)
 
     if print_extractor_information(opts, all_urls):
         return
@@ -1074,10 +1078,10 @@ def _real_main(argv=None):
             return 101
 
 
-def main(argv=None):
+def main(argv=None, url_hook=None):
     IN_CLI.value = True
     try:
-        _exit(*variadic(_real_main(argv)))
+        _exit(*variadic(_real_main(argv, url_hook)))
     except (CookieLoadError, DownloadError, UnsafeExecExpansionError):
         _exit(1)
     except SameFileError as e:
